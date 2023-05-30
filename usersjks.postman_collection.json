@@ -59,7 +59,7 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Resultado User Id\",function(){\r",
-									" pm.expect(respUserId).to.equals(\"63f8cb4e1fd9060f2f4e1554\");\r",
+									" pm.expect(respUserId).to.equals(\"638e2505e18c210f3402dd9b\");\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Resultado roles\",function(){\r",
@@ -371,200 +371,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "tenantConfigs",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const respJson = pm.response.json();\r",
-									"const resptenantConfigs = respJson.data.tenantConfigs;\r",
-									"const ConfigNavigation = resptenantConfigs[0].config;\r",
-									"const nameRankings = resptenantConfigs[0].value[0].name;\r",
-									"const ConfigON_BOARDING = resptenantConfigs[1].config;\r",
-									"const nameFIRST_RANKING = resptenantConfigs[1].value[1].name;\r",
-									"const ConfigHome = resptenantConfigs[2].config;\r",
-									"const nameINSIGHTS_DAYS = resptenantConfigs[2].value[1].name;\r",
-									"\r",
-									"const ConfigRANKINGS = resptenantConfigs[3].config;\r",
-									"const nameNull = resptenantConfigs[3].value[0].name;\r",
-									"const ConfigPost = resptenantConfigs[6].config;\r",
-									"const nameSHOW_CAROUSEL = resptenantConfigs[6].value[1].name;\r",
-									"\r",
-									"\r",
-									"pm.test(\"Validar status 200\",function(){\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Validate Config Navigation\",function(){\r",
-									" pm.expect(ConfigNavigation).to.be.eql(\"NAVIGATION\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Validate Name Rankings\",function(){\r",
-									" pm.expect(nameRankings).to.be.eql(\"RANKING\");\r",
-									"});\r",
-									"pm.test(\"Validate Config ON_BOARDING\",function(){\r",
-									" pm.expect(ConfigON_BOARDING).to.be.eql(\"ON_BOARDING\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Validate Name en First Rankings\",function(){\r",
-									" pm.expect(nameFIRST_RANKING).to.be.eql(\"FIRST_RANKING\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Validate Config Home\",function(){\r",
-									" pm.expect(ConfigHome).to.be.eql(\"HOME\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Validate name INSIGHTS_DAYS\",function(){\r",
-									" pm.expect(nameINSIGHTS_DAYS).to.be.eql(\"INSIGHTS_DAYS\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"\r",
-									"pm.test(\"Validate Config Rankings\",function(){\r",
-									" pm.expect(ConfigRANKINGS).to.be.eql(\"RANKINGS\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Validate Name en Rankings null\",function(){\r",
-									" pm.expect(nameNull).to.be.eql(null);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Validate Config Post\",function(){\r",
-									" pm.expect(ConfigPost).to.be.eql(\"POST\");\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Validate name SHOW_CAROUSEL\",function(){\r",
-									" pm.expect(nameSHOW_CAROUSEL).to.be.eql(\"SHOW_CAROUSEL\");\r",
-									"});\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query{\r\n      tenantConfigs {\r\n     config\r\n      value {\r\n        name\r\n        value\r\n        stringValue\r\n      }\r\n    \t}\r\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "whiteListUser",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const respJson = pm.response.json();\r",
-									"const whiteListUser = respJson.data.whiteListUser;\r",
-									"\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"crear usuario\",function(){\r",
-									" pm.expect(whiteListUser).to.be.eql(\"DONE\");\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "  mutation whiteListUser($email: String!, $tenant: String!, $roles:[String]!) {\r\n    whiteListUser(tenant: $tenant, email: $email, roles:$roles) \r\n  }\r\n",
-								"variables": "  {\r\n\t\t\"email\": \"pruebaPostman@gmail.com.ar\",\r\n \t\t\"tenant\": \"{{tenant}}\",\r\n   \t    \"roles\": [\"ADMIN\"]\r\n  }"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "deleteUser",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const respJson = pm.response.json();\r",
-									"const deleteUser = respJson.data.deleteUser;\r",
-									"\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"borrar usuario\",function(){\r",
-									" pm.expect(deleteUser).to.be.eql(\"DONE\");\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "  mutation deleteUser($email: String!, $tenant: String!) {\r\n    deleteUser(tenant: $tenant, email: $email) \r\n  }\r\n",
-								"variables": "{\r\n  \"email\": \"pruebaPostman@gmail.com.ar\",\r\n  \"tenant\": \"{{tenant}}\"\r\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Users",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query users($offset: Int, $limit: Int) {\r\n  users(offset: $offset, limit: $limit) {\r\n    rows {\r\n      _id\r\n      email\r\n      firstName\r\n      lastName\r\n      fullName\r\n      tenant\r\n      scopeAccepted\r\n      roles\r\n      __typename\r\n    }\r\n    total\r\n    __typename\r\n  }\r\n}\r\n",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"event": [
@@ -610,18 +416,7 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"// Define el tiempo de espera en milisegundos (ejemplo: 4000 ms = 4 segundos)",
-					"const delay = 4000;",
-					"",
-					"// Obtiene la lista de solicitudes en la colección",
-					"const requests = pm.collection.requests.all();",
-					"",
-					"// Itera sobre cada solicitud y agrega un tiempo de espera antes de ejecutarla",
-					"for (let i = 0; i < requests.length; i++) {",
-					"  setTimeout(() => {",
-					"    pm.collection.request(requests[i].id);",
-					"  }, delay * i);",
-					"}"
+					""
 				]
 			}
 		},
