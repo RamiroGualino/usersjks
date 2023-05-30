@@ -1,0 +1,672 @@
+{
+	"info": {
+		"_postman_id": "66deb0a0-7364-4ffb-9952-5b943bc5c906",
+		"name": "usersjks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26302892",
+		"_collection_link": "https://cloudy-trinity-735948.postman.co/workspace/Team-Workspace~eeafbbeb-0090-42fb-80c4-744f6e15e419/collection/26302892-66deb0a0-7364-4ffb-9952-5b943bc5c906?action=share&creator=26302892&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Users Copy",
+			"item": [
+				{
+					"name": "Me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respJson = pm.response.json();\r",
+									"const respMe = respJson.data.me;\r",
+									"const respgmbAccount = respMe.gmbAccount;\r",
+									"const business = respMe.business;\r",
+									"pm.collectionVariables.set(\"business\",business)\r",
+									"\r",
+									"const fullName = respMe.fullName;\r",
+									"pm.collectionVariables.set(\"fullName\",fullName)\r",
+									"\r",
+									"const respEmail = respMe.email;\r",
+									"pm.collectionVariables.set(\"email\",respEmail)\r",
+									"\r",
+									"const position = respMe.position;\r",
+									"pm.collectionVariables.set(\"position\",position)\r",
+									"\r",
+									"const phone = respMe.phone;\r",
+									"pm.collectionVariables.set(\"phone\",phone)\r",
+									"\r",
+									"const accountId = respMe.accountId;\r",
+									"pm.collectionVariables.set(\"accountId\",accountId)\r",
+									"\r",
+									"const respTenant = respMe.tenant;\r",
+									"pm.collectionVariables.set(\"tenant\",respTenant)\r",
+									"\r",
+									"const respUserId = respMe._id;\r",
+									"pm.collectionVariables.set(\"respUserId\",respUserId)\r",
+									"\r",
+									"const respRoles = respMe.roles[0];\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Resultado Email\",function(){\r",
+									" pm.expect(respEmail).to.be.eql(\"automation.qa@arrowsoluciones.com.ar\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Resultado User Id\",function(){\r",
+									" pm.expect(respUserId).to.equals(\"63f8cb4e1fd9060f2f4e1554\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Resultado roles\",function(){\r",
+									" pm.expect(respRoles).to.eql(\"ADMIN\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Resultado Gmb Account\",function(){\r",
+									" pm.expect(respgmbAccount).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Resultado Tenant\",function(){\r",
+									" pm.expect(respTenant).to.be.eql(\"test\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n  me{\r\n    roles  \r\n    _id\r\n    accountId\r\n    gmbAccount\r\n    position\r\n    business\r\n    fullName\r\n    phone\r\n    email\r\n    tenant\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ValidateGoogleAccount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respJson = pm.response.json();\r",
+									"const respValidateGoogleAccount =respJson.data.validateGoogleAccount;\r",
+									"\r",
+									"pm.test(\"Validar status 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"validate True Google Account\",function(){\r",
+									" pm.expect(respValidateGoogleAccount).to.be.eql(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n  validateGoogleAccount\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveUserInfo - update fullName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respJson = pm.response.json();\r",
+									"const saveUserInfo = respJson.data.saveUserInfo;\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Actualizacion de nombre exitoso\",function(){\r",
+									" pm.expect(saveUserInfo).to.be.eql(\"DONE\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation ($fullName: String!, $business: String!, $phone: String!, $position: String!, $id: String!) {\r\n  saveUserInfo(fullName: $fullName, business: $business, phone: $phone, position: $position, user: {_id: $id})\r\n}",
+								"variables": "{\r\n  \"fullName\": \"Actualizar Nombre\",\r\n  \"business\": \"{{business}}\",\r\n  \"phone\": \"{{phone}} \",\r\n  \"position\": \"{{position}}\",\r\n  \"id\": \"{{respUserId}}\"\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Me - validate update fullName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respJson = pm.response.json();\r",
+									"const respMe = respJson.data.me;\r",
+									"const respfullName = respMe.fullName;\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Nombre Actualizado\",function(){\r",
+									" pm.expect(respfullName).to.be.eql(\"Actualizar Nombre\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n  me{\r\n    roles  \r\n    _id\r\n    accountId\r\n    gmbAccount\r\n    position\r\n    business\r\n    fullName\r\n    phone\r\n    email\r\n    tenant\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveUserInfo - update original",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respJson = pm.response.json();\r",
+									"const saveUserInfo = respJson.data.saveUserInfo;\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Actualizacion de nombre exitoso\",function(){\r",
+									" pm.expect(saveUserInfo).to.be.eql(\"DONE\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation ($fullName: String!, $business: String!, $phone: String!, $position: String!, $id: String!) {\r\n  saveUserInfo(fullName: $fullName, business: $business, phone: $phone, position: $position, user: {_id: $id})\r\n}",
+								"variables": "{\r\n  \"fullName\": \"{{fullName}}\",\r\n  \"business\": \"{{business}}\",\r\n  \"phone\": \"{{phone}} \",\r\n  \"position\": \"{{position}}\",\r\n  \"id\": \"{{respUserId}}\"\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viewSectionsInfo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respJson = pm.response.json();\r",
+									"const respviewSectionsInfo = respJson.data.viewSectionsInfo;\r",
+									"\r",
+									"const namePost = respviewSectionsInfo[0].name;\r",
+									"const isActivePost = respviewSectionsInfo[0].isActive;\r",
+									"\r",
+									"const nameAds = respviewSectionsInfo[1].name;\r",
+									"const isActiveAds = respviewSectionsInfo[1].isActive;\r",
+									"\r",
+									"const nameRankings = respviewSectionsInfo[2].name;\r",
+									"const isActiveRankings = respviewSectionsInfo[2].isActive; \r",
+									"\r",
+									"const nameReviews = respviewSectionsInfo[3].name;\r",
+									"const isActiveReviews = respviewSectionsInfo[3].isActive;\r",
+									"\r",
+									"\r",
+									"const nameHome = respviewSectionsInfo[4].name;\r",
+									"const isActiveHome = respviewSectionsInfo[4].isActive;\r",
+									"\r",
+									"\r",
+									"const nameStore = respviewSectionsInfo[5].name;\r",
+									"const isActiveStore = respviewSectionsInfo[5].isActive;\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validar status 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Name en POST\",function(){\r",
+									" pm.expect(namePost).to.be.eql(\"POSTS\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate isActive en POST\",function(){\r",
+									" pm.expect(isActivePost).to.be.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Name en Ads\",function(){\r",
+									" pm.expect(nameAds).to.be.eql(\"ADS\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate isActive en Ads\",function(){\r",
+									" pm.expect(isActiveAds).to.be.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Name en Rankings\",function(){\r",
+									" pm.expect(nameRankings).to.be.eql(\"RANKINGS\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate isActive en Rankings\",function(){\r",
+									" pm.expect(isActiveRankings).to.be.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Name en Reviews\",function(){\r",
+									" pm.expect(nameReviews).to.be.eql(\"REVIEWS\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate isActive en Reviews\",function(){\r",
+									" pm.expect(isActiveReviews).to.be.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Name en Home\",function(){\r",
+									" pm.expect(nameHome).to.be.eql(\"HOME\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate isActive en Home\",function(){\r",
+									" pm.expect(isActiveHome).to.be.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Name en Store\",function(){\r",
+									" pm.expect(nameStore).to.be.eql(\"STORE_SETTINGS\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate isActive en Store\",function(){\r",
+									" pm.expect(isActiveStore).to.be.eql(false);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "    query{\r\n      viewSectionsInfo {\r\n            name\r\n            isActive\r\n    \t}\r\n    }",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tenantConfigs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respJson = pm.response.json();\r",
+									"const resptenantConfigs = respJson.data.tenantConfigs;\r",
+									"const ConfigNavigation = resptenantConfigs[0].config;\r",
+									"const nameRankings = resptenantConfigs[0].value[0].name;\r",
+									"const ConfigON_BOARDING = resptenantConfigs[1].config;\r",
+									"const nameFIRST_RANKING = resptenantConfigs[1].value[1].name;\r",
+									"const ConfigHome = resptenantConfigs[2].config;\r",
+									"const nameINSIGHTS_DAYS = resptenantConfigs[2].value[1].name;\r",
+									"\r",
+									"const ConfigRANKINGS = resptenantConfigs[3].config;\r",
+									"const nameNull = resptenantConfigs[3].value[0].name;\r",
+									"const ConfigPost = resptenantConfigs[6].config;\r",
+									"const nameSHOW_CAROUSEL = resptenantConfigs[6].value[1].name;\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validar status 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Config Navigation\",function(){\r",
+									" pm.expect(ConfigNavigation).to.be.eql(\"NAVIGATION\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Name Rankings\",function(){\r",
+									" pm.expect(nameRankings).to.be.eql(\"RANKING\");\r",
+									"});\r",
+									"pm.test(\"Validate Config ON_BOARDING\",function(){\r",
+									" pm.expect(ConfigON_BOARDING).to.be.eql(\"ON_BOARDING\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Name en First Rankings\",function(){\r",
+									" pm.expect(nameFIRST_RANKING).to.be.eql(\"FIRST_RANKING\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Config Home\",function(){\r",
+									" pm.expect(ConfigHome).to.be.eql(\"HOME\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate name INSIGHTS_DAYS\",function(){\r",
+									" pm.expect(nameINSIGHTS_DAYS).to.be.eql(\"INSIGHTS_DAYS\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate Config Rankings\",function(){\r",
+									" pm.expect(ConfigRANKINGS).to.be.eql(\"RANKINGS\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Name en Rankings null\",function(){\r",
+									" pm.expect(nameNull).to.be.eql(null);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate Config Post\",function(){\r",
+									" pm.expect(ConfigPost).to.be.eql(\"POST\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate name SHOW_CAROUSEL\",function(){\r",
+									" pm.expect(nameSHOW_CAROUSEL).to.be.eql(\"SHOW_CAROUSEL\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\r\n      tenantConfigs {\r\n     config\r\n      value {\r\n        name\r\n        value\r\n        stringValue\r\n      }\r\n    \t}\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "whiteListUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respJson = pm.response.json();\r",
+									"const whiteListUser = respJson.data.whiteListUser;\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"crear usuario\",function(){\r",
+									" pm.expect(whiteListUser).to.be.eql(\"DONE\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "  mutation whiteListUser($email: String!, $tenant: String!, $roles:[String]!) {\r\n    whiteListUser(tenant: $tenant, email: $email, roles:$roles) \r\n  }\r\n",
+								"variables": "  {\r\n\t\t\"email\": \"pruebaPostman@gmail.com.ar\",\r\n \t\t\"tenant\": \"{{tenant}}\",\r\n   \t    \"roles\": [\"ADMIN\"]\r\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respJson = pm.response.json();\r",
+									"const deleteUser = respJson.data.deleteUser;\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"borrar usuario\",function(){\r",
+									" pm.expect(deleteUser).to.be.eql(\"DONE\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "  mutation deleteUser($email: String!, $tenant: String!) {\r\n    deleteUser(tenant: $tenant, email: $email) \r\n  }\r\n",
+								"variables": "{\r\n  \"email\": \"pruebaPostman@gmail.com.ar\",\r\n  \"tenant\": \"{{tenant}}\"\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query users($offset: Int, $limit: Int) {\r\n  users(offset: $offset, limit: $limit) {\r\n    rows {\r\n      _id\r\n      email\r\n      firstName\r\n      lastName\r\n      fullName\r\n      tenant\r\n      scopeAccepted\r\n      roles\r\n      __typename\r\n    }\r\n    total\r\n    __typename\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Define el tiempo de espera en milisegundos (ejemplo: 4000 ms = 4 segundos)",
+					"const delay = 4000;",
+					"",
+					"// Obtiene la lista de solicitudes en la colección",
+					"const requests = pm.collection.requests.all();",
+					"",
+					"// Itera sobre cada solicitud y agrega un tiempo de espera antes de ejecutarla",
+					"for (let i = 0; i < requests.length; i++) {",
+					"  setTimeout(() => {",
+					"    pm.collection.request(requests[i].id);",
+					"  }, delay * i);",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "business",
+			"value": ""
+		},
+		{
+			"key": "fullName",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "position",
+			"value": ""
+		},
+		{
+			"key": "phone",
+			"value": ""
+		},
+		{
+			"key": "accountId",
+			"value": ""
+		},
+		{
+			"key": "tenant",
+			"value": ""
+		},
+		{
+			"key": "respUserId",
+			"value": ""
+		}
+	]
+}
